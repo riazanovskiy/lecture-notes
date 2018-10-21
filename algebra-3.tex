@@ -1,0 +1,211 @@
+\documentclass[a4paper]{article}
+\usepackage{cmap}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm,bindingoffset=0cm]{geometry}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{indentfirst}
+\usepackage{tikz,tikz-cd}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{nicefrac}
+
+\usetikzlibrary{matrix, arrows}
+\usetikzlibrary{babel}
+
+\makeatletter
+\tikzset{
+  edge node/.code={%
+      \expandafter\def\expandafter\tikz@tonodes\expandafter{\tikz@tonodes #1}}}
+\makeatother
+\tikzset{
+  Subset/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$\subset$}}}
+  }
+}
+
+\usepackage{amssymb,amsmath,amsthm,amsfonts,amscd}
+\usepackage{dsfont}
+\usepackage{mathabx}
+\usepackage{mathtools}
+
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+
+\newcommand{\eps}{\varepsilon}
+
+\let\temp\phi
+\let\phi\varphi
+\let\varphi\temp
+
+\DeclareMathOperator{\chr}{char}
+
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\dsep}{d_{sep}}
+\DeclareMathOperator{\di}{d_{i}}
+
+% \renewcommand{\char}{\mathop{\mathrm{char}}\nolimits}
+
+% \usepackage{chngcntr}
+
+\newtheorem{theorem}{Теорема}
+\numberwithin{theorem}{section}
+
+\newtheorem{lemma}{Лемма}
+\numberwithin{lemma}{section}
+
+\newtheorem*{theorem*}{Теорема}
+\newtheorem*{lemma*}{Лемма}
+
+\newtheorem{proposition}{Предложение}
+\numberwithin{proposition}{section}
+
+\newtheorem{corollary}{Следствие}
+\numberwithin{corollary}{section}
+
+% \let\emph\relax % there's no \RedeclareTextFontCommand
+% \DeclareTextFontCommand{\emph}{\bfseries\em}
+
+
+\begin{document}
+
+\section{Лекция}
+
+\subsection*{Характеристика поля}
+Существует единственный гомоморфизм $\phi: \Z \to K$, $\phi(1) = 1_K$.
+Возможны два случая:
+\begin{itemize}
+    \item $\ker \phi = 0$, тогда $\phi$ можно продолжить до гомоморфизма из $\Q$ в $K$,
+    $\phi(\frac{n}{m}) = \frac{n_K}{m_K}$,
+    тогда $\Q \subseteq K$ и $\chr K = 0$.
+    \item
+    \begin{minipage}{0.9\linewidth}
+        $\ker \phi \ne 0$, тогда $\phi$ пропускается через $\frac{\Z}{\ker \phi}$, где идеал $\ker \phi$ порождается одним элементом~$p > 0$, и $p$ простое.
+        Тогда $\F_p \subseteq K$ и $\chr K = p$.
+    \end{minipage}
+    \begin{minipage}{0.15\linewidth}
+    \begin{tikzcd}[row sep=scriptsize,column sep=tiny]
+        \Z \arrow[r, "\phi" above] \arrow[d, ->>] & K \\
+        \nicefrac{\Z}{\ker \phi} \arrow[ur, hook]
+    \end{tikzcd}
+    \end{minipage}
+\end{itemize}
+
+\begin{theorem}
+Если $K$ --- конечное поле, то $|K| = p^n$ для простого числа $p$ и $0 < n \in \Z$.
+\end{theorem}
+\begin{proof}
+$\chr K = p > 0$, следовательно, $\F_p \subseteq K$ и $K$ является векторным пространством над $\F_p$. Если $\dim_{\F_p}K = n$, то $|K| = p^n$.
+\end{proof}
+
+\subsection*{Примеры полей}
+
+Пусть $A$ --- коммутативное кольцо с единицей и $I \subset A$ --- идеал.
+\begin{proposition}
+$\nicefrac{A}{I}$ --- поле тогда и только тогда, когда $I$ --- максимальный.
+\end{proposition}
+\begin{proof}
+Пусть $I$ максимальный, рассмотрим $\phi: A \to \nicefrac{A}{I}$.
+Для $x \in \nicefrac{A}{I}$ прообраз $\phi^{-1}((x))$ является идеалом, следовательно
+\[\phi^{-1}((x)) \supsetneq I
+\Rightarrow \phi^{-1}((x)) = A
+\Rightarrow (x) = \nicefrac{A}{I}
+\Rightarrow \exists y : \: xy = 1_{\nicefrac{A}{I}}\]
+
+В обратную сторону: пусть $I \subsetneq I'$. $\phi(I')$ --- идеал в
+поле $\nicefrac{A}{I}$, следовательно $\phi(I') = \nicefrac{A}{I} \Rightarrow I' = A$.
+\end{proof}
+
+\begin{minipage}{0.7\linewidth}
+Частный случай: кольцо $A = K[x]$, $f \in K[x]$ --- неприводимый многочлен, тогда $I = (f)$ --- максимальный идеал,
+а $\nicefrac{K[x]}{(f)}$ --- поле.
+\end{minipage}
+\begin{minipage}{0.15\linewidth}
+\begin{tikzcd}[row sep=scriptsize,column sep=scriptsize]
+    K[x] \arrow[r, "\phi" above] & \nicefrac{K[x]}{(f)} \\
+    K \arrow[Subset]{u}{} \arrow[ur, hook]
+\end{tikzcd}
+\end{minipage}
+
+
+\textbf{Замечание.}
+Существует $\alpha \in \nicefrac{K[x]}{(f)}$, такая что $f(\alpha) = 0$. Если $f(x) = a_d x^d + \ldots + a_1 x + a_0 $ и $\alpha = \phi(x)$,
+то $f(\alpha) = f(\phi(x)) = \phi(f(x)) = 0$.
+
+Любой многочлен $g(x) \in K[x]$ можно единственным образом записать как $g(x) = f(x)q(x) + r(x)$, где $\deg r(x) < d$, поэтому
+$\{1_K, \phi(x), (\phi(x))^2, \ldots, (\phi(x))^{d-1}\}$ --- базис в
+\nicefrac{K[x]}{(f)}.
+
+\subsection*{Расширения полей}
+Поле $L$ называется \textbf{расширением} $K$, если $K \subset L$.
+Размерность $\dim_K L$ называется \textbf{степенью расширения} --- $[L : K]$.
+Если степень $[L : K] < \infty$, то расширение называется \textbf{конечным}.
+
+\begin{proposition} В цепочке расширения $K \subset L \subset F$
+\[[F:K] = [F:L] \cdot [L : K]\]
+\end{proposition}
+\begin{proof}
+Пусть $v_1, v_2, \ldots, v_\alpha$ --- базис в $L$ над $K$ и
+$w_1, w_2, \ldots, w_\alpha$ --- базис в $F$ над $L$.
+Тогда $\{v_i w_j\}$ --- базис в $F$ на $K$.
+Действительно, пусть $\alpha \in F$. Тогда
+\[\alpha = \sum_j b_j w_j = \sum_j \sum_i a_{ij}v_i w_j \]
+
+Чтобы доказать линейную независимость, рассмотрим
+линейную комбинацию $\sum_{i,j} a_{ij}v_i w_j = 0$, где $a_{ij} \in K$.
+Переупорядочивая, получим \[\sum_i\left(\sum_j a_{ij} w_j\right)v_i = 0,\]
+следовательно \[\forall i \quad \sum_j a_{ij} w_j = 0\]
+Отсюда все $a_{ij} = 0$.
+\end{proof}
+
+\subsection*{Алгебраические расширения}
+Пусть $K \subset L$ --- расширение поле, тогда $\alpha \in L$
+называется \textbf{алгебраическим} над $K$, если существует ненулевой
+$f \in K[x]$, такой что $f(\alpha) = 0$.
+
+Рассмотрим гомоморфизм $ev_\alpha: K[x] \to L$, $ev_\alpha(f(x)) = f(\alpha)$. Тогда $\alpha$ алгебраический тогда и только тогда,
+когда $\ker \alpha \ne 0$.
+
+Если $\alpha$ --- алгебраический над $K$, то $\ker ev_\alpha = (f)$,
+где $f$ --- неприводимый и $f(\alpha) = 0$. Такой $f$ называется
+\textbf{минимальным многочленом} для $\alpha$. Его степень $\deg f$ обозначается $\deg_K f$.
+
+Для расширения $K \subset L$ и
+элементов $\alpha_1, \dots, \alpha_r \in L$
+обозначим как $K(\alpha_1, \dots, \alpha_r)$ наименьшее подполе $L$,
+содержащее все $\alpha_1, \dots, \alpha_r$.
+
+\begin{proposition}
+$\alpha \in L$ алгебраичен над $K$ тогда и только тогда,
+когда $[K(\alpha) : K] < \infty$.
+\end{proposition}
+\begin{proof}
+
+$\Leftarrow$: $K[x] \xrightarrow{ev_\alpha} K(\alpha) \subset L$
+$\dim_K K(\alpha) < \infty$, $\dim_K K[x] = \infty$, следовательно
+$\ker ev_\alpha \ne 0$ и $\alpha$~---~алгебраический.
+
+$\Rightarrow$: Если $\alpha$ --- алгебраический, то $[K(\alpha) : K] = \deg f$, где $f$ --- минимальный многочлен для $\alpha$.
+\end{proof}
+
+Отсюда по индукции получаем, что если $\alpha_1, \dots, \alpha_r$ алгебраические, то $[$K(\alpha_1, \dots, \alpha_r)$ : K] < \infty$.
+
+\begin{theorem}
+Пусть $K \subset L$ --- расширение.
+Рассмотрим $L_{alg} = \{\alpha \in L \mid  \text{$\alpha$ алгебраично над $K$}\}$.
+Тогда $L'$ --- подполе $L$.
+\end{theorem}
+\begin{proof}
+Пусть $\alpha, \beta \in L_{alg}$
+\end{proof}
+
+
+\end{document}
