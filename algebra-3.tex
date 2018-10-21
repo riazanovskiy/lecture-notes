@@ -43,6 +43,8 @@
 \let\phi\varphi
 \let\varphi\temp
 
+\newcommand{\id}{\mathrm{id}}
+
 \DeclareMathOperator{\chr}{char}
 
 \DeclareMathOperator{\im}{Im}
@@ -271,7 +273,7 @@ $\Rightarrow$: Если $\alpha$ --- алгебраический, то $[K(\alp
 
 Нельзя построить семиугольник:
 
-\begin{minipage}{0.4\linewidth}
+\begin{minipage}{0.35\linewidth}
 \centering
 \begin{tikzpicture}
 \node[draw=none,minimum size=4cm,regular polygon,regular polygon sides=7,draw,shape border rotate=12.8571429] (a) {};
@@ -295,6 +297,7 @@ $[\Q(\xi) : \Q(\cos (\frac{2\pi}{7}))]$ равна 2 или 1.
 Поэтому $[\Q(\cos (\frac{2\pi}{7})) : \Q] = 3 \ne 2^n$.
 \end{minipage}
 
+\subsection*{Алгебраические расширения}
 Расширение $K \subset L$ называется \textbf{алгебраическим},
 если $L_{alg} = L$.
 
@@ -307,6 +310,8 @@ $[\Q(\xi) : \Q(\cos (\frac{2\pi}{7}))]$ равна 2 или 1.
 %TODO
 \[K \subset K(a_0, a_1, \ldots, a_d) \subset K(a_0, a_1, \ldots, a_d, \alpha)\]
 \end{proof}
+
+\subsubsection*{Поле разложения}
 
 Пусть $f \in K[x]$. Тогда $L \supset K$ называется \textbf{полем разложения} $f$, если $f$ разлагается на линейные множители в $L[x]$,
 то есть $f(x) = a(x - a_1) \cdots (x - \alpha_d)$,
@@ -322,5 +327,131 @@ $[\Q(\xi) : \Q(\cos (\frac{2\pi}{7}))]$ равна 2 или 1.
 ко всем неприводимым множителям $\frac{f(y)}{y - \alpha} \in K_1[y]$
 и возьмём $L = K(\alpha_1, \ldots, \alpha_d)$
 \end{proof}
+
+\section{Алгебраическое замыкание}
+\textbf{Алгебраическим замыканием} поля $K$ называется алгебраически замкнутое поле $\overline{K}$, алгебраичное над $K$.
+
+\textbf{Замечание.} Если $L \supset \overline{K}$ --- алгебраическое расширение, то $L = \overline{K}$.
+
+\begin{theorem}
+Алгебраическое замыкание существует
+\end{theorem}
+\begin{proof}
+Пусть $I$ --- множество всех многочленов $f \in K[x]$ положительной степени. Вполне упорядочим $I$ и построим по индукции цепочку
+расширений $K \subset K_\alpha \subset K_\beta \subset \ldots$,
+где $\alpha \prec \beta$ и $K_\beta$ --- это поле разложения
+$f_\beta \in I$ над $\bigcup_{\alpha\prec\beta}K_\alpha$.
+Положим $\overline{K} = \bigcup_{\gamma \in I} K_\gamma$ и докажем,
+что это алгебраическое замыкание. По построению $\overline{K}$ является алгебраическим расширением $K$.
+Пусть $\overline{K} \supset L$ --- алгебраическое расширения.
+Тогда для $z \in L$
+\[K \subset \overline{K} \subset\overline{K}(z) \subset L\]
+
+Элемент $z$ алгебраичен над $\overline{K}$, следовательно, и над $K$,
+то есть существует многочлен $f \ne 0$, такой что $f(z) = 0$.
+Но тогда $z \in \overline{K}$ по построению.
+\end{proof}
+
+\begin{proposition}
+Алгебраическое замыкание единственно с точностью до изоморфизма
+\end{proposition}
+
+Пусть $L_1, L_2 \supset K$ --- расширения.
+Обозначим морфизмы над $K$
+
+\[Mor_K(L_1, L_2) = \{\phi: L_1 \to L_2 \mid \phi|_K = \id_K \}\]
+
+\[
+\begin{tikzcd}
+    L_1 \arrow[r, "\phi" above] & L_2 \\
+    K \arrow[Subset]{u}{} \arrow[r, "\id"] & K \arrow[Subset]{u}{}
+\end{tikzcd}
+\]
+
+\subsubsection*{Наблюдения}
+Если $\alpha \in L_1$ и $f(\alpha) = 0$ для $f \in K[x]$,
+то $f(\phi(\alpha)) = 0$. Отсюда следует,
+что если $[ L_1 : K ] < \infty$, то $|Mor_K(L_1,L_2)|<\infty$.
+
+Пусть $L_1 = \frac{K[y]}{(f)}$, где $f$ --- неприводимый.
+Тогда морфизмы $Mor_K(L_1, L_2)$ соответствуют корням многочлена $f$ в $L_2$.
+
+\paragraph*{Пример} $|Mor_\Q(\Q(\sqrt[3]{3}, \mathbb{C}))| = 3$.
+
+\begin{theorem}
+Пусть $\overline{K} \supset K$ --- алгебраическое замыкание
+и $L \supset K$ --- алгебраическое расширение. Тогда существует
+вложение $L \supset \overline{K}$, то есть $Mor_K(L, \overline{K}) \ne \emptyset$.
+\end{theorem}
+\begin{proof}
+По лемме Цорна существует максимальный элемент порядка $(L', \phi)$,
+где $K \subset L' \subset L$ и $\phi: L' \hookrightarrow \overline{K}$,
+такой, что $\phi|_K = \id$.
+Покажем, что $L' = L$.
+Пусть $\alpha \in L \setminus L'$.
+Рассмотрим его минимальный многочлен $f \in L'[x]$
+и поле $L'(\alpha) = \frac{L'[x]}{(f)}$. Определим
+гомоморфизм $\phi: \frac{L'[x]}{(f)} \to \overline{K}$, $\phi: x \mapsto \alpha \in \overline{K}$, противоречие с максимальностью.
+\end{proof}
+
+Следствие --- $|Mor_K(L, \overline{K})| \le [L : K]$. В самом деле,
+пусть $L = K(\alpha_1, \ldots, \alpha_m)$. Тогда при добавлении $\alpha_i$ возможно не более чем $\deg_{K(\alpha_1, \ldots, \alpha_{i-1}} \alpha_i$ вложений в $\overline{K}$.
+
+\[
+\begin{tikzcd}
+    K(\alpha_1, \ldots, \alpha_{i+1}) \arrow[r, hook] & \overline{K} \\
+    K(\alpha_1, \ldots, \alpha_i) \arrow[Subset]{u}{} \arrow[ru, hook] &
+\end{tikzcd}
+\]
+
+\begin{proposition}
+Поле разложения единственно.
+\end{proposition}
+\begin{proof}
+Пусть $f \in K[x]$ и $L_1$, $L_2$ --- поля разложения $f$ над $K$.
+
+Существует $\phi$, переводящий корни $f$ в $L_1$ в корни $f$ в $\overline{L_2}$, поскольку это алгебраическое замыкание. Они лежат в $L_2$, следовательно, $\phi(L_1) \subset L_2$.
+
+\[
+\begin{tikzcd}
+    &  \overline{L_2} \\
+    L_1 \arrow[ur, "\exists \phi"] \arrow[r, dash] & L_2 \arrow[Subset]{u}{}
+\end{tikzcd}
+\]
+
+Пусть $f(x) = a(x - \alpha_1)\cdots(x - \alpha_d) \in L_1[x]$, тогда
+$f(x) = a(x - \phi(\alpha_1))\cdots(x - \phi(\alpha_d)) \in L_2[x]$,
+то есть все корни $f$ в $L_2$ лежат в $\phi(L_1)$, следовательно,
+все корни $f$ в $L_2$ лежат в $\phi(L_1)$ и $\phi(L_1) = L_2$
+\end{proof}
+
+\begin{proposition}
+Алгебраическое замыкание единственно.
+\end{proposition}
+\begin{proof}
+\begin{minipage}{0.15\linewidth}
+\begin{tikzcd}
+    \overline{K} \arrow[r, hook, "\exists \phi"] & \overline{K'} \\
+    K \arrow[Subset]{u}{} & K \arrow[Subset]{u}{}
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{0.63\linewidth}
+Докажем, что $\phi$ сюръективно. Пусть $\alpha \in \overline{K'}$.
+Пусть $f$ --- минимальный многочлен для $f$. В обоих алгебраических
+замыканиях есть подполя, являющиеся полями разложения $f$, в частности,
+такое подполе есть в $\overline{K}$. В нём есть такой корень $f$,
+который переходит в $\alpha$.
+\end{minipage}
+\end{proof}
+
+\subsection*{Сепарабельность}
+
+Многочлен $f \in K[x]$ называется $\textbf{сепарабельным}$,
+если у его нет кратных корней в $\overline{K}$.
+\begin{theorem}
+Пусть $\chr K = 0$. Тогда любой неприводимый $f \in K[x]$ сепарабельный.
+\end{theorem}
+
+
 
 \end{document}
