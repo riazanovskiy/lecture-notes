@@ -448,10 +448,31 @@ $f(x) = a(x - \phi(\alpha_1))\cdots(x - \phi(\alpha_d)) \in L_2[x]$,
 
 Многочлен $f \in K[x]$ называется $\textbf{сепарабельным}$,
 если у его нет кратных корней в $\overline{K}$.
+
+\begin{lemma}
+$\alpha$ --- кратный корень $f$ тогда и только тогда,
+когда $f(\alpha) = f'(\alpha) = 0$
+\end{lemma}
+\begin{proof}
+Если $f(\alpha) = 0$,
+то $f(x) = a_1(x - \alpha) + a_2 (x - \alpha)^2 + \ldots$.
+Тогда $f'(\alpha) = a_1$
+\end{proof}
+\begin{lemma}
+$f$ сепарабелен тогда и только тогда,
+когда $f$ и $f'$ не имеют общих делителей степени больше 0 в $K[x]$.
+\end{lemma}
+\begin{proof}
+Пусть $\gcd(f, f') = 1$. Тогда существуют $a, b \in K[x]$, такие,
+что $af + bf' = 1$, и следовательно $f$ и $f'$ взаимно просты и в
+$\overline{K}$
+\end{proof}
+
 \begin{theorem}
 Пусть $\chr K = 0$. Тогда любой неприводимый $f \in K[x]$ сепарабельный.
 \end{theorem}
-
-
+\begin{proof}
+Если $f = a_nx^n + \ldots + a_0$, то $f' = n a_nx^{n-1}+\ldots+a_1 \ne 0$, поскольку $\chr K = 0$, и $\gcd(f, f') = 1$.
+\end{proof}
 
 \end{document}
