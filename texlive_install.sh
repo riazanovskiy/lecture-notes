@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -xv
+
 # Originally from https://github.com/latex3/latex3
 
 # This script is used for testing using Travis

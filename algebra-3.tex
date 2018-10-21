@@ -6,13 +6,16 @@
 \usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm,bindingoffset=0cm]{geometry}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 \usepackage{indentfirst}
-\usepackage{tikz,tikz-cd}
+\usepackage{pgf}
+\usepackage{pgfmath}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{pgffor}
 \usepackage{wrapfig}
 \usepackage{multicol}
 \usepackage{nicefrac}
 
-\usetikzlibrary{matrix, arrows}
-\usetikzlibrary{babel}
+\usetikzlibrary{matrix,arrows,shapes.geometric,babel,angles}
 
 \makeatletter
 \tikzset{
@@ -66,7 +69,7 @@
 
 \begin{document}
 
-\section{Лекция}
+\section{Расширения полей}
 
 \subsection*{Характеристика поля}
 Существует единственный гомоморфизм $\phi: \Z \to K$, $\phi(1) = 1_K$.
@@ -124,7 +127,6 @@ $\nicefrac{A}{I}$ --- поле тогда и только тогда, когда
 \end{tikzcd}
 \end{minipage}
 
-
 \textbf{Замечание.}
 Существует $\alpha \in \nicefrac{K[x]}{(f)}$, такая что $f(\alpha) = 0$. Если $f(x) = a_d x^d + \ldots + a_1 x + a_0 $ и $\alpha = \phi(x)$,
 то $f(\alpha) = f(\phi(x)) = \phi(f(x)) = 0$.
@@ -177,7 +179,6 @@ $\alpha \in L$ алгебраичен над $K$ тогда и только то
 когда $[K(\alpha) : K] < \infty$.
 \end{proposition}
 \begin{proof}
-
 $\Leftarrow$: $K[x] \xrightarrow{ev_\alpha} K(\alpha) \subset L$
 $\dim_K K(\alpha) < \infty$, $\dim_K K[x] = \infty$, следовательно
 $\ker ev_\alpha \ne 0$ и $\alpha$~---~алгебраический.
@@ -193,8 +194,133 @@ $\Rightarrow$: Если $\alpha$ --- алгебраический, то $[K(\alp
 Тогда $L'$ --- подполе $L$.
 \end{theorem}
 \begin{proof}
-Пусть $\alpha, \beta \in L_{alg}$
+Пусть $\alpha, \beta \in L_{alg}$.
+Поскольку $[K(\alpha, \beta) : K] < \infty$, каждый элемент $\gamma \in K(\alpha, \beta)$ алгебраичен над $K$.
 \end{proof}
 
+\section{Невозможность некоторых построений}
+При построених циркулем и линейкой нам разрешены три операции:
+\begin{enumerate}
+    \item Провести прямую через ранее построенные точки
+    \item Провести окружность с центром в ранее построенной точке через другую точку.
+    \item Построить точку пересечения
+\end{enumerate}
+
+\begin{theorem}
+Дан отрезок длины 1. С помощью циркуля и линейки можно построить отрезок длины $a \in \R$, где $a$ --- квадратичная иррациональность.
+\end{theorem}
+\begin{proof}
+Докажем, что если точку с координатами $(a, b)$ можно построить,
+то $a$ и $b$ --- квадратичные иррациональности.
+
+%TODO
+(картинка с кругом)
+
+Если $(x, y)$ является пересечением прямой через и окружности,
+то $(x, y)$ является решением системы
+\[
+    \begin{cases}
+        (x - a)^2 + (y - b)^2 = r^2 \\
+        cx+dy = e
+    \end{cases},
+\]
+где $a, b, r, c,d,e$ --- квадратичные иррациональности.
+
+%TODO
+Если $\alpha = x + iy$ является пересечением двух окружностей,
+то $(x, y)$ является решением системы
+\[
+    \begin{cases}
+        (x - a)^2 + (y - b)^2 = r^2 \\
+        (x - c)^2 + (y - y_3)^2 = x_4^2 + y_4^2
+    \end{cases},
+\]
+где $a, b, r, c,d, R$ --- квадратичные иррациональности.
+\[
+    \begin{cases}
+        (x - a)^2 + (y - b)^2 = r^2 \\
+        2(a - c)x + 2(b - d)y = R^2 - r^2 + a^2 + b^2 -c^2-d^2
+    \end{cases}
+\]
+и решение --- квадратичная иррациональность.
+\end{proof}
+
+\subsubsection*{Напоминание}
+Построим, например, $\sqrt{a}$, если дан отрезок длины $a$.
+%TODO
+
+\subsubsection*{Наблюдение}
+Для квадратичной иррациональности $a \in \R$
+степень $\deg_\Q a = 2^n$.
+
+\subsubsection*{Пример}
+Пусть $a = \dfrac{\sqrt{\sqrt{2}+\sqrt{3}}}{\sqrt{7}}$.
+
+%TODO
+\[\Q \subset \Q(\sqrt{2}) \subset \Q(\sqrt{2},\sqrt{3})
+\subset \Q(\sqrt{2},\sqrt{3},\sqrt{7})
+\subset \Q(\sqrt{2},\sqrt{3},\sqrt{7}, \sqrt{\sqrt{2}+\sqrt{3}})\]
+
+Поскольку степень $[K_i : K_{i - 1}]$ равна 1 или 2, то $[K_4 : \Q]$ --- степень 2.
+Поскольку $\Q \subset \Q(a) \subset K_4$,
+\[[\Q(a) : \Q] \cdot [K_4 : \Q(a)] = [K_4 : \Q] = 2^k
+\Rightarrow [\Q(a) : \Q] = 2^{k'}\]
+
+\subsubsection*{Следствия}
+Нельзя построить $\sqrt[3]{2}$: многочлен $x^3 - 2$ неприводим по критерию Эйзенштейна и $\deg_\Q \sqrt[3]{2} = 3$.
+
+Нельзя построить семиугольник:
+
+\begin{minipage}{0.4\linewidth}
+\centering
+\begin{tikzpicture}
+\node[draw=none,minimum size=4cm,regular polygon,regular polygon sides=7,draw,shape border rotate=12.8571429] (a) {};
+\foreach \x in {1,2,...,7}
+  \fill (a.corner \x) circle[radius=2pt];
+\draw (0,0) circle (2cm);
+\draw (0,0) node[circle,fill,inner sep=1pt](O){};
+\draw (O) edge[thick] (a.corner 7);
+\draw (O) edge[thick] (a.corner 1);
+\draw (a.corner 7) coordinate (A) -- (0,0) coordinate (O) -- (a.corner 1) coordinate (C) pic[draw,->,angle eccentricity=1.8,"$\frac{2\pi}{7}$"{font=\footnotesize}] {angle = A--O--C};
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.6\linewidth}
+Достаточно доказать, что \[\deg_\Q \cos \frac{2\pi}{7} \ne 2^n \]
+Пусть $\xi = \exp(\frac{2\pi i}{7}) = \cos(\frac{2\pi}{7}) + i \sin(\frac{2\pi}{7}$, $\xi^7=1$.
+
+Тогда $\cos(\frac{2\pi}{7}) = \frac{1}{2}(\xi + \xi^{-1})$. Многочлен $1+x+x^6$ --- неприводимый, отсюда $\deg_\Q \xi = 6$.
+
+Поскольку $\xi^2 - 2 \cos (\frac{2\pi}{7})\xi + 1 = 0$, степень
+$[\Q(\xi) : \Q(\cos (\frac{2\pi}{7}))]$ равна 2 или 1.
+Поэтому $[\Q(\cos (\frac{2\pi}{7})) : \Q] = 3 \ne 2^n$.
+\end{minipage}
+
+Расширение $K \subset L$ называется \textbf{алгебраическим},
+если $L_{alg} = L$.
+
+\begin{proposition}
+Если $L$ --- алгебраическое расширение $K$ и $F$ --- алгебраическое расширение $L$, то расширение $F \subset F$ также алгебраическое.
+\end{proposition}
+
+\begin{proof}
+Пусть $\alpha \in F$. Тогда существует $f = a_0 + a_1 x + \ldots + a_d x^d \in L[x]$, такой что $f(\alpha) = 0$. Все $a_i$ алгебраичны над $K$
+%TODO
+\[K \subset K(a_0, a_1, \ldots, a_d) \subset K(a_0, a_1, \ldots, a_d, \alpha)\]
+\end{proof}
+
+Пусть $f \in K[x]$. Тогда $L \supset K$ называется \textbf{полем разложения} $f$, если $f$ разлагается на линейные множители в $L[x]$,
+то есть $f(x) = a(x - a_1) \cdots (x - \alpha_d)$,
+где $\alpha_i \in L$, и $L = K(\alpha_1, \ldots, \alpha_d)$.
+
+\begin{proposition}
+Поле разложения существует
+\end{proposition}
+\begin{proof}
+Пусть $g \in K[x]$ --- неприводимый делитель $f$.
+Рассмотрим $K_1 = \frac{K[x]}{(g)} \supset K$. В $K_1$ многочлен $g$
+имеет корень $\alpha = x + (g)$. Применим такую же конструкцию
+ко всем неприводимым множителям $\frac{f(y)}{y - \alpha} \in K_1[y]$
+и возьмём $L = K(\alpha_1, \ldots, \alpha_d)$
+\end{proof}
 
 \end{document}
