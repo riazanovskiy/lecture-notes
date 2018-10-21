@@ -1,0 +1,18 @@
+language: generic
+install:
+- source ./texlive_install.sh
+cache:
+  directories:
+  - "/tmp/texlive"
+  - "$HOME/.texlive"
+script:
+- mkdir _build
+- travis_wait 3 pdflatex -output-directory _build -shell-escape ./algebra-3.tex
+deploy:
+  provider: releases
+  api_key:
+    secure: FP44vTLNQz6aQ19OZOpsdsjaeDnXpW8r3UqHp8SccAm56lnweTfD8sKK5FCzh/oAUAKkMp9zzkQs5wr5exmkNEsypsl3gcDXICoNAGAUMC731D4yzyUmXtSV84FqTstzVe2PrtpvW3zdG7EdXjt7EzA2JSDViw9dA+liVYM/GxzxqwTnmYWwjjg8gh3Rr8wkvjdoQyeCb+0kkUHi1+E+I/YitfnqDITqnj9TnNWCeq/diKyyhqJIcuIm2ExXr+jJo6SeY/mq4Zh7y9665LAhbkI4SddgJhv+pByr3/FHyBHja70eiBFudTt5TG1wiue2GBeMrbRO6MJms8ctTWy9mguhOFO+R9ziHLwgBZBfH9eMd/s2/EkDRU/NPa/B6Au9cFoou2K8UkjphMj4Y/f1J6OF8dpfVzOKnwr3MEpFWpcKONy3LGL/squlPKgvyNrkGFf10XpSjqI6yc8nhikeUMlTU6SOtnnWYGb2doxDsL2MoMSjq21XNrMFUfrRX2D17/3l4ev9lClDexKqGTPHFLZg/bOVlgCE4EhEMGPVZdE9asqdSkPuhzlAnvoGmm988VVQYNu2X7o0UUfYzBFSyF8qOMso/O7icZjOjCZGIXWXUZMA6U6QVUdeSgWwJWoMER7pNWTfONViQCerRSEYbeTv6mUob7pE1NizSvrvgRs=
+  file: _build/algebra-3.pdf
+  skip_cleanup: true
+  on:
+    repo: riazanovskiy/lecture-notes

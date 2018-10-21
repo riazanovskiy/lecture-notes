@@ -28,9 +28,6 @@
 }
 
 \usepackage{amssymb,amsmath,amsthm,amsfonts,amscd}
-\usepackage{dsfont}
-\usepackage{mathabx}
-\usepackage{mathtools}
 
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
@@ -52,10 +49,6 @@
 \DeclareMathOperator{\dsep}{d_{sep}}
 \DeclareMathOperator{\di}{d_{i}}
 
-% \renewcommand{\char}{\mathop{\mathrm{char}}\nolimits}
-
-% \usepackage{chngcntr}
-
 \newtheorem{theorem}{Теорема}
 \numberwithin{theorem}{section}
 
@@ -70,10 +63,6 @@
 
 \newtheorem{corollary}{Следствие}
 \numberwithin{corollary}{section}
-
-% \let\emph\relax % there's no \RedeclareTextFontCommand
-% \DeclareTextFontCommand{\emph}{\bfseries\em}
-
 
 \begin{document}
 
@@ -196,7 +185,7 @@ $\ker ev_\alpha \ne 0$ и $\alpha$~---~алгебраический.
 $\Rightarrow$: Если $\alpha$ --- алгебраический, то $[K(\alpha) : K] = \deg f$, где $f$ --- минимальный многочлен для $\alpha$.
 \end{proof}
 
-Отсюда по индукции получаем, что если $\alpha_1, \dots, \alpha_r$ алгебраические, то $[$K(\alpha_1, \dots, \alpha_r)$ : K] < \infty$.
+Отсюда по индукции получаем, что если $\alpha_1, \dots, \alpha_r$ алгебраические, то $[K(\alpha_1, \dots, \alpha_r) : K] < \infty$.
 
 \begin{theorem}
 Пусть $K \subset L$ --- расширение.
